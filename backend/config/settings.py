@@ -9,7 +9,7 @@ from pathlib import Path
 #  TODO dumpdata
 
 # ? models.Model
-# ? pre-commit line fixer
+# ? pre-commit line fixer pre-commit permissions linux permissions
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
