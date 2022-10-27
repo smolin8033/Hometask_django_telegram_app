@@ -1,12 +1,15 @@
 import os
 from pathlib import Path
 
-# TODO CRUD Hometask (+ Image + File)
-# TODO Testing Hometask
-# TODO CRUD User
-# TODO Pre-commit https://github.com/john-hen/Flake8-pyproject length
-# TODO aiogram
-# TODO dumpdata
+#  TODO CRUD Hometask (+ Image + File)
+#  TODO Testing Hometask
+#  TODO CRUD User
+#  TODO Pre-commit https://github.com/john-hen/Flake8-pyproject length
+#  TODO aiogram
+#  TODO dumpdata
+
+# ? models.Model
+# ? pre-commit line fixer
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,6 +26,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # apps
+    "hometask.apps.HometaskConfig",
+    # side-packages
 ]
 
 MIDDLEWARE = [
