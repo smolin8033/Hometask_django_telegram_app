@@ -21,16 +21,17 @@ class HometaskViewSet(ModelViewSet):
 
     @transaction.atomic
     def create(self, request, *args, **kwargs):
-
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         hometask_data = serializer.validated_data
         images_data = None
         files_data = None
+        images_retieved = None
 
         if "images" in hometask_data.keys():
             images_data = hometask_data.pop("images")
+            images_retieved = request.FILES.getlist("images")
 
         if "files" in hometask_data.keys():
             files_data = hometask_data.pop("files")
@@ -38,7 +39,7 @@ class HometaskViewSet(ModelViewSet):
         hometask = Hometask.objects.create(**hometask_data)
 
         if images_data:
-            self.create_images(hometask, images_data)
+            self.create_images(hometask, images_retieved)
 
         if files_data:
             self.create_files(hometask, files_data)
@@ -46,13 +47,9 @@ class HometaskViewSet(ModelViewSet):
         return Response(hometask_data, status=status.HTTP_201_CREATED)
 
     @staticmethod
-    def create_images(hometask, images_data):
-        print(images_data)
-        print("\n\n\n\n")
-        print(i for i in images_data)
-        print("\n\n\n\n")
+    def create_images(hometask, images_retieved):
         images = []
-        for image in images_data:
+        for image in images_retieved:
             images.append(HometaskImage(hometask=hometask, image=image))
         return HometaskImage.objects.bulk_create(images)
 
