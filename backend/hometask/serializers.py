@@ -1,15 +1,55 @@
-from hometask.models import Hometask, HometaskImage
+from hometask.models import Hometask, HometaskFile, HometaskImage
 from rest_framework.serializers import FileField, ImageField, ModelSerializer
 
 
-class HometaskSerializer(ModelSerializer):
+class HometaskImageSerializer(ModelSerializer):
+    """
+    Сериализатор изображений к домашнему заданию
+    """
+
+    class Meta:
+        model = HometaskImage
+        fields = ("hometask", "image")
+
+
+class HometaskFileSerializer(ModelSerializer):
+    """
+    Сериализатор файлов к домашнему заданию
+    """
+
+    class Meta:
+        model = HometaskFile
+        fields = ("hometask", "file")
+
+
+class HometaskListSerializer(ModelSerializer):
+    """
+    Сериализатор списка домашних заданий
+    """
+
+    images = HometaskImageSerializer(read_only=True, many=True)
+    files = HometaskFileSerializer(read_only=True, many=True)
+
     class Meta:
         model = Hometask
-        fields = "__all__"
+        fields = (
+            "name",
+            "start_datetime",
+            "end_datetime",
+            "coursebook",
+            "exercises",
+            "url",
+            "more_info",
+            "images",
+            "files",
+        )
 
 
 class HometaskCreateSerializer(ModelSerializer):
-    # images = ImageField(required=False)
+    """
+    Сериализатор создания домашнего задания
+    """
+
     images = ImageField(required=False)
     files = FileField(required=False)
 

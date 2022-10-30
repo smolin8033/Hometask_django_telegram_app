@@ -11,6 +11,7 @@ from pathlib import Path
 # ? models.Model
 # ? pre-commit line fixer pre-commit permissions linux permissions
 # ? https://stackoverflow.com/questions/27015931/remove-null-fields-from-django-rest-framework-response
+# ? validated_data images files
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 

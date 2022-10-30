@@ -1,7 +1,7 @@
 from django.db import transaction
 from drf_spectacular.utils import extend_schema
 from hometask.models import Hometask, HometaskFile, HometaskImage
-from hometask.serializers import HometaskCreateSerializer, HometaskSerializer
+from hometask.serializers import HometaskCreateSerializer, HometaskListSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -9,15 +9,25 @@ from rest_framework.viewsets import ModelViewSet
 
 @extend_schema(tags=["Домашнее задание"])
 class HometaskViewSet(ModelViewSet):
-
-    queryset = Hometask.objects.all()
-    serializer_class = HometaskSerializer
+    """
+    Домашние задания
+    """
 
     def get_serializer_class(self):
-        serializer_class = HometaskSerializer
+        serializer_class = HometaskListSerializer
         if self.action == self.create.__name__:
             serializer_class = HometaskCreateSerializer
         return serializer_class
+
+    def get_queryset(self):
+        queryset = []
+        if self.action == self.list.__name__:
+            queryset = (
+                Hometask.objects.prefetch_related("images")
+                .prefetch_related("files")
+                .all()
+            )
+        return queryset
 
     @transaction.atomic
     def create(self, request, *args, **kwargs):
