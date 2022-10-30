@@ -10,6 +10,7 @@ from pathlib import Path
 
 # ? models.Model
 # ? pre-commit line fixer pre-commit permissions linux permissions
+# ? https://stackoverflow.com/questions/27015931/remove-null-fields-from-django-rest-framework-response
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -31,6 +32,7 @@ INSTALLED_APPS = [
     # side-packages
     "rest_framework",
     "drf_spectacular",
+    "debug_toolbar",
 ]
 
 REST_FRAMEWORK = {
@@ -45,6 +47,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -101,7 +104,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "/static")
 

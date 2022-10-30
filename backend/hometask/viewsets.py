@@ -1,6 +1,6 @@
 from django.db import transaction
 from drf_spectacular.utils import extend_schema
-from hometask.models import Hometask, HometaskImage
+from hometask.models import Hometask, HometaskFile, HometaskImage
 from hometask.serializers import HometaskCreateSerializer, HometaskSerializer
 from rest_framework import status
 from rest_framework.response import Response
@@ -27,31 +27,37 @@ class HometaskViewSet(ModelViewSet):
         hometask_data = serializer.validated_data
         images_data = None
         files_data = None
-        images_retieved = None
+        images_retrieved = None
+        files_retrieved = None
 
         if "images" in hometask_data.keys():
             images_data = hometask_data.pop("images")
-            images_retieved = request.FILES.getlist("images")
+            images_retrieved = request.FILES.getlist("images")
 
         if "files" in hometask_data.keys():
             files_data = hometask_data.pop("files")
+            files_retrieved = request.FILES.getlist("files")
 
         hometask = Hometask.objects.create(**hometask_data)
 
         if images_data:
-            self.create_images(hometask, images_retieved)
+            self.create_images(hometask, images_retrieved)
 
         if files_data:
-            self.create_files(hometask, files_data)
+            self.create_files(hometask, files_retrieved)
 
         return Response(hometask_data, status=status.HTTP_201_CREATED)
 
     @staticmethod
-    def create_images(hometask, images_retieved):
+    def create_images(hometask, images_retrieved):
         images = []
-        for image in images_retieved:
+        for image in images_retrieved:
             images.append(HometaskImage(hometask=hometask, image=image))
         return HometaskImage.objects.bulk_create(images)
 
-    def create_files(self, hometask, files_data):
-        pass
+    @staticmethod
+    def create_files(hometask, files_retrieved):
+        files = []
+        for file in files_retrieved:
+            files.append(HometaskFile(hometask=hometask, file=file))
+        return HometaskFile.objects.bulk_create(files)
