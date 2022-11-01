@@ -2,6 +2,11 @@ import pytest
 from django.urls import reverse
 from hometask.models import Hometask, HometaskFile, HometaskImage
 from rest_framework import status
+from tests.tests_hometasks.faked_data.factories import (
+    HometaskFactory,
+    HometaskFileFactory,
+    HometaskImageFactory,
+)
 from tests.tests_hometasks.faked_data.fake_files import (
     generate_temp_file,
     generate_temp_image,
@@ -115,3 +120,50 @@ class TestHometaskViewSet:
         assert data["end_datetime"] == hometask.end_datetime
         assert data["url"] == hometask.url
         assert data["more_info"] == hometask.more_info
+
+    @pytest.mark.django_db
+    def test_action_list(self, api_client, django_assert_max_num_queries):
+
+        hometasks_array = [HometaskFactory() for _ in range(3)]
+        assert len(hometasks_array) == 3
+
+        url = reverse("hometasks-list")
+
+        with django_assert_max_num_queries(3):
+            response = api_client.get(url)
+
+        assert response.status_code == status.HTTP_200_OK
+        json_response = response.json()
+        assert len(json_response) == 3
+        assert len(json_response[0]["images"]) == 1
+        assert len(json_response[2]["files"]) == 1
+
+    @pytest.mark.django_db
+    def test_action_retrieve(self, api_client, django_assert_max_num_queries):
+
+        hometask = HometaskFactory()
+
+        url = reverse("hometasks-detail", kwargs={"pk": hometask.pk})
+
+        with django_assert_max_num_queries(3):
+            response = api_client.get(url)
+
+        assert response.status_code == status.HTTP_200_OK
+
+    @pytest.mark.django_db
+    def test_action_delete(self, api_client):
+        hometask = HometaskFactory()
+
+        assert Hometask.objects.count() == 1
+        assert HometaskImage.objects.count() == 1
+        assert HometaskFile.objects.count() == 1
+
+        url = reverse("hometasks-detail", kwargs={"pk": hometask.pk})
+
+        response = api_client.delete(url)
+
+        assert response.status_code == status.HTTP_204_NO_CONTENT
+
+        assert Hometask.objects.count() == 0
+        assert HometaskImage.objects.count() == 0
+        assert HometaskFile.objects.count() == 0

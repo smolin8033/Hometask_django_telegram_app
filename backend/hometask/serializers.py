@@ -33,6 +33,7 @@ class HometaskListSerializer(ModelSerializer):
     class Meta:
         model = Hometask
         fields = (
+            "id",
             "name",
             "start_datetime",
             "end_datetime",

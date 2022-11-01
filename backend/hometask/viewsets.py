@@ -20,13 +20,9 @@ class HometaskViewSet(ModelViewSet):
         return serializer_class
 
     def get_queryset(self):
-        queryset = []
-        if self.action == self.list.__name__:
-            queryset = (
-                Hometask.objects.prefetch_related("images")
-                .prefetch_related("files")
-                .all()
-            )
+        queryset = (
+            Hometask.objects.prefetch_related("images").prefetch_related("files").all()
+        )
         return queryset
 
     @transaction.atomic
