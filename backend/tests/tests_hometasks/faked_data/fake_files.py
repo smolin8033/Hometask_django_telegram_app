@@ -20,9 +20,7 @@ def generate_temp_file(counter=1):
     for _ in list(range(counter)):
         file = StringIO()
         file.write("hello world")
-        text_file = InMemoryUploadedFile(
-            file, None, f"{id(file)}.txt", "text", "charset", None
-        )
+        text_file = InMemoryUploadedFile(file, None, f"{id(file)}.txt", "text", "charset", None)
         text_file.seek(0)
         files.append(text_file)
     return files[0] if counter == 1 else files

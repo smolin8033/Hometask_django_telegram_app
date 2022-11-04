@@ -26,11 +26,13 @@ repos:
     rev: '22.3.0'
     hooks:
       - id: black
-        exclude: ^.*\b(migrations)\b.*$
 
   - repo: https://github.com/pycqa/isort
-    rev: 5.10.1
+    rev: 5.5.4
     hooks:
       - id: isort
-        name: isort (python)
-        args: ["--profile", "black"]
+
+  - repo: https://github.com/john-hen/Flake8-pyproject
+    rev: 1.0.1
+    hooks:
+      - id: Flake8-pyproject

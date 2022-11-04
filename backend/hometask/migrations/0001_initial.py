@@ -8,37 +8,46 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Hometask',
+            name="Hometask",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=60, verbose_name='Название д/з')),
-                ('start_datetime', models.DateTimeField(verbose_name='Время начала выполнения д/з')),
-                ('end_datetime', models.DateTimeField(verbose_name='Время сдачи д/з')),
-                ('coursebook', models.CharField(blank=True, max_length=50, verbose_name='Название учебника')),
-                ('exercises', models.CharField(blank=True, max_length=50, verbose_name='Упражнения для выполнения')),
-                ('url', models.URLField(blank=True, verbose_name='Ссылка для прикрепления в случае необходимости')),
-                ('more_info', models.TextField(blank=True, verbose_name='Дополнительная информация')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("name", models.CharField(max_length=60, verbose_name="Название д/з")),
+                ("start_datetime", models.DateTimeField(verbose_name="Время начала выполнения д/з")),
+                ("end_datetime", models.DateTimeField(verbose_name="Время сдачи д/з")),
+                ("coursebook", models.CharField(blank=True, max_length=50, verbose_name="Название учебника")),
+                ("exercises", models.CharField(blank=True, max_length=50, verbose_name="Упражнения для выполнения")),
+                ("url", models.URLField(blank=True, verbose_name="Ссылка для прикрепления в случае необходимости")),
+                ("more_info", models.TextField(blank=True, verbose_name="Дополнительная информация")),
             ],
         ),
         migrations.CreateModel(
-            name='HometaskImage',
+            name="HometaskImage",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(upload_to='')),
-                ('hometask', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='images', to='hometask.hometask')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("image", models.ImageField(upload_to="")),
+                (
+                    "hometask",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, related_name="images", to="hometask.hometask"
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='HometaskFile',
+            name="HometaskFile",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('file', models.FileField(upload_to='')),
-                ('hometask', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='files', to='hometask.hometask')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("file", models.FileField(upload_to="")),
+                (
+                    "hometask",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, related_name="files", to="hometask.hometask"
+                    ),
+                ),
             ],
         ),
     ]

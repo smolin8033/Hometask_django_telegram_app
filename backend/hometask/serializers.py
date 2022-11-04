@@ -1,5 +1,6 @@
-from hometask.models import Hometask, HometaskFile, HometaskImage
 from rest_framework.serializers import FileField, ImageField, ModelSerializer
+
+from hometask.models import Hometask, HometaskFile, HometaskImage
 
 
 class HometaskImageSerializer(ModelSerializer):
