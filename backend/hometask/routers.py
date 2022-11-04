@@ -4,5 +4,3 @@ from .viewsets import HometaskViewSet
 
 router = DefaultRouter()
 router.register("hometasks", HometaskViewSet, basename="hometasks")
-
-print(router.urls)

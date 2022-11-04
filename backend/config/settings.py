@@ -2,9 +2,7 @@ import os
 from pathlib import Path
 
 #  TODO CRUD Hometask (+ Image + File)
-#  TODO Testing Hometask
 #  TODO CRUD User
-#  TODO Pre-commit https://github.com/john-hen/Flake8-pyproject length
 #  TODO aiogram
 #  TODO dumpdata
 
@@ -15,7 +13,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-r*knz0^%#ky#m(qxp#f*y&a1798#_%&a@sx47z(=w!xrdb6-0+"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 DEBUG = True
 
@@ -74,11 +72,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "postgres",
-        "PORT": "5432",
+        "NAME": os.getenv("DATABASE_NAME"),
+        "USER": os.getenv("DATABASE_USER"),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+        "HOST": os.getenv("DATABASE_HOST"),
+        "PORT": os.getenv("DATABASE_PORT"),
     }
 }
 
