@@ -10,7 +10,7 @@ class HometaskImageSerializer(ModelSerializer):
 
     class Meta:
         model = HometaskImage
-        fields = ("hometask", "image")
+        fields = ("id", "hometask", "image")
 
 
 class HometaskFileSerializer(ModelSerializer):
@@ -20,7 +20,7 @@ class HometaskFileSerializer(ModelSerializer):
 
     class Meta:
         model = HometaskFile
-        fields = ("hometask", "file")
+        fields = ("id", "hometask", "file")
 
 
 class HometaskListSerializer(ModelSerializer):

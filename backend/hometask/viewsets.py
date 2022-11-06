@@ -5,7 +5,12 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from hometask.models import Hometask, HometaskFile, HometaskImage
-from hometask.serializers import HometaskCreateSerializer, HometaskListSerializer
+from hometask.serializers import (
+    HometaskCreateSerializer,
+    HometaskFileSerializer,
+    HometaskImageSerializer,
+    HometaskListSerializer,
+)
 
 
 @extend_schema(tags=["Домашнее задание"])
@@ -66,3 +71,17 @@ class HometaskViewSet(ModelViewSet):
         for file in files_retrieved:
             files.append(HometaskFile(hometask=hometask, file=file))
         return HometaskFile.objects.bulk_create(files)
+
+
+@extend_schema(tags=["Изображения к домашнему заданию"])
+class HometaskImageViewSet(ModelViewSet):
+    queryset = HometaskImage.objects.all()
+    serializer_class = HometaskImageSerializer
+    http_method_names = ["get", "put"]
+
+
+@extend_schema(tags=["Файлы к домашнему заданию"])
+class HometaskFileViewSet(ModelViewSet):
+    queryset = HometaskFile.objects.all()
+    serializer_class = HometaskFileSerializer
+    http_method_names = ["get", "put"]

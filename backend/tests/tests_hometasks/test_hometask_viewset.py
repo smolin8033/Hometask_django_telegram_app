@@ -164,3 +164,33 @@ class TestHometaskViewSet:
         assert Hometask.objects.count() == 0
         assert HometaskImage.objects.count() == 0
         assert HometaskFile.objects.count() == 0
+
+    @pytest.mark.django_db
+    def test_action_update(self, api_client):
+        hometask = HometaskFactory()
+
+        assert Hometask.objects.count() == 1
+
+        data = {
+            "name": "Abs new name",
+            "start_datetime": "2023-10-30 01:55:39",
+            "end_datetime": "2023-10-30 01:55:39",
+            "url": "https://heeeeeeeey.com/",
+            "more_info": "New test info",
+            "coursebook": "New cb",
+            "exercises": "some exercises",
+        }
+
+        url = reverse("hometasks-detail", kwargs={"pk": hometask.pk})
+
+        response = api_client.put(url, data=data)
+        json_response = response.json()
+
+        assert response.status_code == status.HTTP_200_OK
+        assert json_response["name"] != hometask.name
+        assert json_response["start_datetime"] != hometask.start_datetime
+        assert json_response["end_datetime"] != hometask.end_datetime
+        assert json_response["url"] != hometask.url
+        assert json_response["more_info"] != hometask.more_info
+        assert json_response["coursebook"] != hometask.coursebook
+        assert json_response["exercises"] != hometask.exercises
