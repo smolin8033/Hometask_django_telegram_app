@@ -22,19 +22,27 @@ class Hometask(models.Model):
         return self.name
 
 
-class HometaskImage(models.Model):
+class HometaskBaseFile(models.Model):
+    hometask = models.ForeignKey(Hometask, on_delete=models.CASCADE)
+    file = ...
+
+    class Meta:
+        abstract = True
+
+
+class HometaskImage(HometaskBaseFile):
     """
     Изображение для прикрепления к домашнему заданию
     """
 
     hometask = models.ForeignKey(Hometask, related_name="images", on_delete=models.CASCADE)
-    image = models.ImageField()
+    file = models.ImageField()
 
     def __str__(self):
-        return str(self.image)
+        return str(self.file)
 
 
-class HometaskFile(models.Model):
+class HometaskFile(HometaskBaseFile):
     """
     Файл для прикрепления к домашнему заданию
     """

@@ -20,7 +20,7 @@ class TestHometaskImageViewSet:
 
         data = {
             "hometask": second_hometask.pk,
-            "image": temp_image,
+            "file": temp_image,
         }
 
         url = reverse("images-detail", kwargs={"pk": image.pk})
@@ -31,4 +31,4 @@ class TestHometaskImageViewSet:
         assert response.status_code == status.HTTP_200_OK
         assert json_response["hometask"] != hometask.id
         assert json_response["hometask"] == second_hometask.id
-        assert json_response["image"] != image.image
+        assert json_response["file"] != image.file

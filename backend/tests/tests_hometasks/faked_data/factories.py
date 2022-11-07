@@ -12,7 +12,7 @@ class HometaskImageFactory(DjangoModelFactory):
     """Фабрика для модели изображения к домашнему заданию"""
 
     hometask = None
-    image = factory.django.ImageField(width=50, height=50)
+    file = factory.django.ImageField(width=50, height=50)
 
     class Meta:
         model = HometaskImage
@@ -42,7 +42,7 @@ class HometaskFactory(DjangoModelFactory):
     hometask = RelatedFactory(
         HometaskImageFactory,
         factory_related_name="hometask",
-        image=factory.django.ImageField(width=50, height=50),
+        file=factory.django.ImageField(width=50, height=50),
     )
 
     hometask_1 = RelatedFactory(

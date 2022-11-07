@@ -1,4 +1,4 @@
-from rest_framework.serializers import FileField, ImageField, ModelSerializer
+from rest_framework.serializers import ModelSerializer
 
 from hometask.models import Hometask, HometaskFile, HometaskImage
 
@@ -10,7 +10,7 @@ class HometaskImageSerializer(ModelSerializer):
 
     class Meta:
         model = HometaskImage
-        fields = ("id", "hometask", "image")
+        fields = ("id", "hometask", "file")
 
 
 class HometaskFileSerializer(ModelSerializer):
@@ -52,8 +52,8 @@ class HometaskCreateSerializer(ModelSerializer):
     Сериализатор создания домашнего задания
     """
 
-    images = ImageField(required=False)
-    files = FileField(required=False)
+    images = HometaskImageSerializer(many=True, required=False)
+    files = HometaskFileSerializer(many=True, required=False)
 
     class Meta:
         model = Hometask

@@ -8,13 +8,9 @@ count = true
 [tool.black]
 line-length = 120
 include = '\.pyi?$'
-exclude = 'migrations'
+force-exclude = '/migrations/'
 
 [tool.isort] # only applying changes if they don't introduce syntax errors
 atomic = true
 skip_gitignore = true
 profile = 'black'
-
-[tool.end-of-file-fixer]
-files = '^backend/.*.(py|pyi)$'
-exclude = 'migrations'

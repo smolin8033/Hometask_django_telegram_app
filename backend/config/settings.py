@@ -11,6 +11,7 @@ from pathlib import Path
 # ? https://stackoverflow.com/questions/27015931/remove-null-fields-from-django-rest-framework-response
 # ? validated_data images files
 # ? admin page model names
+# ? Добавить nginx
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 

@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.db.models import Model
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.response import Response
@@ -35,42 +36,25 @@ class HometaskViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         hometask_data = serializer.validated_data
-        images_data = None
-        files_data = None
-        images_retrieved = None
-        files_retrieved = None
-
-        if "images" in hometask_data.keys():
-            images_data = hometask_data.pop("images")
-            images_retrieved = request.FILES.getlist("images")
-
-        if "files" in hometask_data.keys():
-            files_data = hometask_data.pop("files")
-            files_retrieved = request.FILES.getlist("files")
 
         hometask = Hometask.objects.create(**hometask_data)
 
-        if images_data:
-            self.create_images(hometask, images_retrieved)
-
-        if files_data:
-            self.create_files(hometask, files_retrieved)
+        self.build_nested_objects(request, hometask.id, images=HometaskImage, files=HometaskFile)
 
         return Response(hometask_data, status=status.HTTP_201_CREATED)
 
-    @staticmethod
-    def create_images(hometask, images_retrieved):
-        images = []
-        for image in images_retrieved:
-            images.append(HometaskImage(hometask=hometask, image=image))
-        return HometaskImage.objects.bulk_create(images)
+    def build_nested_objects(self, request, hometask_id, **nested_objects):
+        for field_name, model in nested_objects.items():
+            field_objects = request.FILES.getlist(field_name)
+            if field_objects is None:
+                continue
+
+            self.create_objects(hometask_id, model, field_objects)
 
     @staticmethod
-    def create_files(hometask, files_retrieved):
-        files = []
-        for file in files_retrieved:
-            files.append(HometaskFile(hometask=hometask, file=file))
-        return HometaskFile.objects.bulk_create(files)
+    def create_objects(hometask_id, model: Model, objects) -> list[Model]:
+        created_objects = [model(hometask_id=hometask_id, file=obj) for obj in objects]
+        model.objects.bulk_create(created_objects)
 
 
 @extend_schema(tags=["Изображения к домашнему заданию"])
