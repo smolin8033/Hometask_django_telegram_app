@@ -1,5 +1,4 @@
 from django.db import transaction
-from django.db.models import Model
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.response import Response
@@ -12,6 +11,7 @@ from hometask.serializers import (
     HometaskImageSerializer,
     HometaskListSerializer,
 )
+from hometask.services.build_nested_objects import build_nested_objects
 
 
 @extend_schema(tags=["Домашнее задание"])
@@ -39,22 +39,9 @@ class HometaskViewSet(ModelViewSet):
 
         hometask = Hometask.objects.create(**hometask_data)
 
-        self.build_nested_objects(request, hometask.id, images=HometaskImage, files=HometaskFile)
+        build_nested_objects(request, hometask.id, images=HometaskImage, files=HometaskFile)
 
         return Response(hometask_data, status=status.HTTP_201_CREATED)
-
-    def build_nested_objects(self, request, hometask_id, **nested_objects):
-        for field_name, model in nested_objects.items():
-            field_objects = request.FILES.getlist(field_name)
-            if field_objects is None:
-                continue
-
-            self.create_objects(hometask_id, model, field_objects)
-
-    @staticmethod
-    def create_objects(hometask_id, model: Model, objects) -> list[Model]:
-        created_objects = [model(hometask_id=hometask_id, file=obj) for obj in objects]
-        model.objects.bulk_create(created_objects)
 
 
 @extend_schema(tags=["Изображения к домашнему заданию"])
