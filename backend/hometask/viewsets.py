@@ -30,6 +30,7 @@ class HometaskViewSet(ModelViewSet):
         queryset = Hometask.objects.prefetch_related("images").prefetch_related("files").all()
         return queryset
 
+    # test
     @transaction.atomic
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
