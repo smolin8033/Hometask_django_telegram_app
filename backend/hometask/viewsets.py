@@ -11,7 +11,7 @@ from hometask.serializers import (
     HometaskImageSerializer,
     HometaskListSerializer,
 )
-from hometask.services.build_nested_objects import build_nested_objects
+from hometask.services.get_nested_objects import get_nested_objects
 
 
 @extend_schema(tags=["Домашнее задание"])
@@ -39,7 +39,7 @@ class HometaskViewSet(ModelViewSet):
 
         hometask = Hometask.objects.create(**hometask_data)
 
-        build_nested_objects(request, hometask.id, images=HometaskImage, files=HometaskFile)
+        get_nested_objects(request, hometask.id, images=HometaskImage, files=HometaskFile)
 
         return Response(hometask_data, status=status.HTTP_201_CREATED)
 
