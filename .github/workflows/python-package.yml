@@ -33,7 +33,8 @@ jobs:
         isort .
     - name: Test with pytest
       run: |
-        backend/pytest
+        cd backend
+        pytest
     - name: Lint with flake8
       run: |
         flake8 .
