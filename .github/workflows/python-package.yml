@@ -33,7 +33,7 @@ jobs:
         isort .
     - name: Lint with flake8
       run: |
-        flake8 .
+        flake8 . --max-line-length=120 --count=true
     - name: Test with pytest
       run: |
         cd backend
