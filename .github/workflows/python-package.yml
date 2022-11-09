@@ -27,13 +27,13 @@ jobs:
         python -m pip install -r backend/requirements.txt
     - name: Lint with black
       run: |
-        black . --check
+        cd backend && black . --check
     - name: Lint with isort
       run: |
-        isort . --check
+        cd backend && isort . --check
     - name: Lint with flake8
       run: |
-        flake8 .
+        cd backend && flake8 .
 
     - name: Create env file
       run: |
