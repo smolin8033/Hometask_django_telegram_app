@@ -38,6 +38,7 @@ jobs:
     - name: Create env file
       run: |
         touch .env
+        echo SECRET_KEY=* >> .env
         echo DATABASE_NAME=postgres >> .env
         echo DATABASE_USER=postgres >> .env
         echo DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} >> .env
