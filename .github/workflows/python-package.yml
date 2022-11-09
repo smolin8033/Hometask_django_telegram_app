@@ -13,9 +13,6 @@ jobs:
       matrix:
         python-version: ["3.10"]
 
-    container:
-      image: docker://<hub-username>/<repo-name>:latest
-
     steps:
     - uses: actions/checkout@v3
       with:
@@ -37,7 +34,11 @@ jobs:
     - name: Lint with flake8
       run: |
         flake8 . --max-line-length=120
+
+    - name: Build docker image
+      run: docker-compose up -d --build
+
     - name: Test with pytest
       run: |
         cd backend
-        pytest
+        docker-compose exec backend pytest
