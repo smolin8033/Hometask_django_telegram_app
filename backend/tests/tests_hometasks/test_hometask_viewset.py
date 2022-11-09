@@ -1,13 +1,13 @@
 import pytest
 from django.urls import reverse
 from rest_framework import status
+
+from hometask.models import Hometask, HometaskFile, HometaskImage
 from tests.tests_hometasks.faked_data.factories import HometaskFactory
 from tests.tests_hometasks.faked_data.fake_files import (
     generate_temp_file,
     generate_temp_image,
 )
-
-from hometask.models import Hometask, HometaskFile, HometaskImage
 
 
 class TestHometaskViewSet:
