@@ -27,13 +27,13 @@ jobs:
         python -m pip install -r backend/requirements.txt
     - name: Lint with black
       run: |
-        black .
+        black . --check
     - name: Lint with isort
       run: |
-        isort .
+        isort . --check
     - name: Lint with flake8
       run: |
-        flake8 . --max-line-length=120
+        flake8 .
 
     - name: Create env file
       run: |
@@ -50,7 +50,7 @@ jobs:
         cat .env
 
     - name: Build docker image
-      run: docker-compose up -d --build
+      run: docker-compose -f docker-compose.yml up -d --build
 
     - name: Test with pytest
-      run: docker-compose exec -T backend pytest
+      run: docker-compose -f docker-compose.yml exec -T backend pytest
