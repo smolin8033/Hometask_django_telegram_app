@@ -9,9 +9,10 @@ from tests.tests_hometasks.faked_data.fake_files import (
     generate_temp_image,
 )
 
+pytestmark = pytest.mark.django_db
+
 
 class TestHometaskViewSet:
-    @pytest.mark.django_db
     def test_action_create_no_files(self, api_client):
         data = {
             "name": "test_name",
@@ -40,7 +41,6 @@ class TestHometaskViewSet:
         assert data["url"] == hometask.url
         assert data["more_info"] == hometask.more_info
 
-    @pytest.mark.django_db
     def test_action_create_one_image_one_file(self, api_client):
         images = generate_temp_image(counter=1)
         files = generate_temp_file(counter=1)
@@ -79,7 +79,6 @@ class TestHometaskViewSet:
         assert data["url"] == hometask.url
         assert data["more_info"] == hometask.more_info
 
-    @pytest.mark.django_db
     def test_action_create_multiple_files(self, api_client):
         images = generate_temp_image(counter=2)
         files = generate_temp_file(counter=2)
@@ -118,7 +117,6 @@ class TestHometaskViewSet:
         assert data["url"] == hometask.url
         assert data["more_info"] == hometask.more_info
 
-    @pytest.mark.django_db
     def test_action_list(self, api_client, django_assert_max_num_queries):
 
         hometasks_array = [HometaskFactory() for _ in range(3)]
@@ -135,7 +133,6 @@ class TestHometaskViewSet:
         assert len(json_response[0]["images"]) == 1
         assert len(json_response[2]["files"]) == 1
 
-    @pytest.mark.django_db
     def test_action_retrieve(self, api_client, django_assert_max_num_queries):
 
         hometask = HometaskFactory()
@@ -147,7 +144,6 @@ class TestHometaskViewSet:
 
         assert response.status_code == status.HTTP_200_OK
 
-    @pytest.mark.django_db
     def test_action_delete(self, api_client):
         hometask = HometaskFactory()
 
@@ -165,7 +161,6 @@ class TestHometaskViewSet:
         assert HometaskImage.objects.count() == 0
         assert HometaskFile.objects.count() == 0
 
-    @pytest.mark.django_db
     def test_action_update(self, api_client):
         hometask = HometaskFactory()
 
@@ -184,13 +179,19 @@ class TestHometaskViewSet:
         url = reverse("hometasks-detail", kwargs={"pk": hometask.pk})
 
         response = api_client.put(url, data=data)
-        json_response = response.json()
 
         assert response.status_code == status.HTTP_200_OK
-        assert json_response["name"] != hometask.name
-        assert json_response["start_datetime"] != hometask.start_datetime
-        assert json_response["end_datetime"] != hometask.end_datetime
-        assert json_response["url"] != hometask.url
-        assert json_response["more_info"] != hometask.more_info
-        assert json_response["coursebook"] != hometask.coursebook
-        assert json_response["exercises"] != hometask.exercises
+
+        assert Hometask.objects.count() == 1
+        hometask = Hometask.objects.first()
+
+        hometask.start_datetime = hometask.start_datetime.strftime("%Y-%m-%d %H:%M:%S")
+        hometask.end_datetime = hometask.end_datetime.strftime("%Y-%m-%d %H:%M:%S")
+
+        assert hometask.name == data["name"]
+        assert hometask.start_datetime == data["start_datetime"]
+        assert hometask.end_datetime == data["end_datetime"]
+        assert hometask.url == data["url"]
+        assert hometask.more_info == data["more_info"]
+        assert hometask.coursebook == data["coursebook"]
+        assert hometask.exercises == data["exercises"]

@@ -1,17 +1,22 @@
 import os
 from pathlib import Path
 
-#  TODO CRUD Hometask (+ Image + File)
 #  TODO CRUD User
 #  TODO aiogram
 #  TODO dumpdata
 
 # ? models.Model
 # ? pre-commit line fixer pre-commit permissions linux permissions
+# ? pytestmark
 # ? https://stackoverflow.com/questions/27015931/remove-null-fields-from-django-rest-framework-response
 # ? validated_data images files
 # ? admin page model names
-# ? Добавить nginx
+#     ? Добавить nginx
+#     развернуть на regru (vps) сертификаты установить
+# ? логика линтеры и тесты
+# изменить тесты
+# botfather token
+# события registrstion просить пользователя email и т д через api post запрос дальше все запросы бота айдишник юзера
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 

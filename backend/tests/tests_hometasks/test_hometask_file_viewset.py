@@ -6,9 +6,10 @@ from hometask.models import HometaskFile
 from tests.tests_hometasks.faked_data.factories import HometaskFactory
 from tests.tests_hometasks.faked_data.fake_files import generate_temp_file
 
+pytestmark = pytest.mark.django_db
+
 
 class TestHometaskFileViewSet:
-    @pytest.mark.django_db
     def test_action_update(self, api_client):
         hometask = HometaskFactory()
         file = hometask.files.first()
@@ -26,9 +27,9 @@ class TestHometaskFileViewSet:
         url = reverse("files-detail", kwargs={"pk": file.pk})
 
         response = api_client.put(url, data=data)
-        json_response = response.json()
 
         assert response.status_code == status.HTTP_200_OK
-        assert json_response["hometask"] != hometask.id
-        assert json_response["hometask"] == second_hometask.id
-        assert json_response["file"] != file.file
+        file = HometaskFile.objects.get(id=file.pk)
+
+        assert file.hometask_id == second_hometask.id
+        assert file.file == temp_file
