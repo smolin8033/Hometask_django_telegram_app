@@ -13,8 +13,6 @@ from pathlib import Path
 # ? admin page model names
 #     ? Добавить nginx
 #     развернуть на regru (vps) сертификаты установить
-# ? логика линтеры и тесты
-# изменить тесты
 # botfather token
 # события registrstion просить пользователя email и т д через api post запрос дальше все запросы бота айдишник юзера
 
