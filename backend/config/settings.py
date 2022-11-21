@@ -6,13 +6,14 @@ from pathlib import Path
 #  TODO dumpdata
 
 # ? models.Model
+# ? google remote data breach
 # ? pre-commit line fixer pre-commit permissions linux permissions
 # ? pytestmark
 # ? https://stackoverflow.com/questions/27015931/remove-null-fields-from-django-rest-framework-response
 # ? validated_data images files
 # ? admin page model names
-#     ? Добавить nginx
-#     развернуть на regru (vps) сертификаты установить
+# Flake 8!!!!!!!!!!!!!!!!!!!!
+#     сертификаты?
 # botfather token
 # события registrstion просить пользователя email и т д через api post запрос дальше все запросы бота айдишник юзера
 
@@ -33,6 +34,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # apps
     "hometask.apps.HometaskConfig",
+    "users.apps.UsersConfig",
     # side-packages
     "rest_framework",
     "drf_spectacular",
@@ -99,6 +101,8 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+AUTH_USER_MODEL = "users.User"
 
 LANGUAGE_CODE = "en-us"
 
