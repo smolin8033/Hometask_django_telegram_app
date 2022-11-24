@@ -5,16 +5,9 @@ from pathlib import Path
 #  TODO aiogram
 #  TODO dumpdata
 
-# ? models.Model
-# ? google remote data breach
-# ? pre-commit line fixer pre-commit permissions linux permissions
-# ? pytestmark
 # ? https://stackoverflow.com/questions/27015931/remove-null-fields-from-django-rest-framework-response
-# ? validated_data images files
 # ? admin page model names
-# Flake 8!!!!!!!!!!!!!!!!!!!!
 #     сертификаты?
-# botfather token
 # события registrstion просить пользователя email и т д через api post запрос дальше все запросы бота айдишник юзера
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,6 +28,7 @@ INSTALLED_APPS = [
     # apps
     "hometask.apps.HometaskConfig",
     "users.apps.UsersConfig",
+    "problem",
     # side-packages
     "rest_framework",
     "drf_spectacular",
