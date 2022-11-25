@@ -28,7 +28,6 @@ INSTALLED_APPS = [
     # apps
     "hometask.apps.HometaskConfig",
     "users.apps.UsersConfig",
-    "problem",
     # side-packages
     "rest_framework",
     "drf_spectacular",
