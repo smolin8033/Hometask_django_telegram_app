@@ -9,7 +9,3 @@ from users.serializers import TelegramUserSerializer
 class TelegramUserViewSet(ModelViewSet):
     queryset = TelegramUser.objects.all()
     serializer_class = TelegramUserSerializer
-
-    def get_queryset(self):
-        queryset = TelegramUser.objects.all()
-        return queryset
