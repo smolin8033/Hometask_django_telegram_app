@@ -23,7 +23,7 @@ class TelegramUser(AbstractUser):
     Модель пользователей Telegram
     """
 
-    telegram_id = models.CharField(max_length=15, unique=True)
+    telegram_id = models.CharField(max_length=100, unique=True)
     email = models.EmailField(blank=True)
     password = None
 

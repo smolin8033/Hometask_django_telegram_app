@@ -5,6 +5,7 @@ from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from hometask.routers import router as hometask_router
+from users.routers import router as telegram_user_router
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -15,6 +16,7 @@ urlpatterns = [
         name="swagger-ui",
     ),
     path("api/", include(hometask_router.urls)),
+    path("api/", include(telegram_user_router.urls)),
     path("__debug__/", include("debug_toolbar.urls")),
 ]
 

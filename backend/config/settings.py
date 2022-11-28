@@ -8,7 +8,7 @@ from pathlib import Path
 # ? https://stackoverflow.com/questions/27015931/remove-null-fields-from-django-rest-framework-response
 # ? admin page model names
 #     сертификаты?
-# события registrstion просить пользователя email и т д через api post запрос дальше все запросы бота айдишник юзера
+# pre_save: max recursion depth
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -118,6 +118,20 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "DEBUG",
+    },
+}
 
 DEBUG_TOOLBAR_PANELS = [
     "debug_toolbar.panels.history.HistoryPanel",
