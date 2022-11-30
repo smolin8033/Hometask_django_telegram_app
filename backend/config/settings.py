@@ -115,10 +115,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "/media")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
-
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -159,3 +155,6 @@ if DEBUG:
     DEBUG_TOOLBAR_CONFIG = {
         "SHOW_TOOLBAR_CALLBACK": show_toolbar,
     }
+    INTERNAL_IPS = [
+        "127.0.0.1",
+    ]
