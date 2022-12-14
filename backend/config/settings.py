@@ -9,6 +9,9 @@ from pathlib import Path
 # ? admin page model names
 #     сертификаты?
 # pre_save: max recursion depth
+# ? getattr(session, name) and HttpClient in general
+# ? Class 'TypedDict' does not define '__getitem__', so the '[]' operator cannot be used on its instances
+# ? send_message / chat_id, but accepts user_id
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
