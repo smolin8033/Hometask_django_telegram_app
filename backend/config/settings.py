@@ -12,6 +12,8 @@ from pathlib import Path
 # ? getattr(session, name) and HttpClient in general
 # ? Class 'TypedDict' does not define '__getitem__', so the '[]' operator cannot be used on its instances
 # ? send_message / chat_id, but accepts user_id
+# ? насчет апдейта измен типов данных
+# ? 400 <coroutine object ClientResponse.json at 0x000002D6B9E32C00>
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
