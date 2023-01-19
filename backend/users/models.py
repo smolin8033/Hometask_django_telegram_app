@@ -26,6 +26,7 @@ class TelegramUser(AbstractUser):
     telegram_id = models.CharField(max_length=100, unique=True)
     email = models.EmailField(blank=True)
     password = None
+    telegram_users = models.ManyToManyField("self", blank=True)
 
     USERNAME_FIELD = "username"
 

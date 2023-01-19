@@ -11,9 +11,8 @@ from pathlib import Path
 # pre_save: max recursion depth
 # ? getattr(session, name) and HttpClient in general
 # ? Class 'TypedDict' does not define '__getitem__', so the '[]' operator cannot be used on its instances
-# ? send_message / chat_id, but accepts user_id
-# ? насчет апдейта измен типов данных
 # ? 400 <coroutine object ClientResponse.json at 0x000002D6B9E32C00>
+# ? корректная обработка get, не проходят данные
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -51,6 +50,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # "users.middlewares.auth_middleware.CheckAuthorization",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 

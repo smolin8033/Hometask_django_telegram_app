@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+# from config.loggers import logger
 from groups.user_groups import students_group, teachers_group
 from users.models import TelegramUser
 from users.serializers import TelegramUserSerializer
@@ -10,8 +11,13 @@ from users.serializers import TelegramUserSerializer
 
 @extend_schema(tags=["Пользователи телеграма"])
 class TelegramUserViewSet(ModelViewSet):
-    queryset = TelegramUser.objects.all()
     serializer_class = TelegramUserSerializer
+
+    def get_queryset(self):
+        # logger.info(f"в кверисете{self.request.user}")
+        # queryset = TelegramUser.objects.prefetch_related("telegram_users").all()
+        queryset = TelegramUser.objects.all()
+        return queryset
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
