@@ -50,7 +50,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # "users.middlewares.auth_middleware.CheckAuthorization",
+    # custom
+    "users.middlewares.auth_middleware.CheckAuthorization",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 

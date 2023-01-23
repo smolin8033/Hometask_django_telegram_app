@@ -8,4 +8,5 @@ from users.models import TelegramUser
 
 @receiver(pre_save, sender=TelegramUser)
 def telegram_user_pre_save(sender, instance, *args, **kwargs):
-    instance.telegram_id = hash_telegram_id(instance.telegram_id)
+    if instance.id is None:
+        instance.telegram_id = hash_telegram_id(instance.telegram_id)
