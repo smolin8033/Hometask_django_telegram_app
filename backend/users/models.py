@@ -26,7 +26,7 @@ class TelegramUser(AbstractUser):
     telegram_id = models.CharField(max_length=100, unique=True)
     email = models.EmailField(blank=True)
     password = None
-    telegram_users = models.ManyToManyField("self", blank=True)
+    telegram_users = models.ManyToManyField("self", blank=True, related_name="users")
 
     USERNAME_FIELD = "username"
 
@@ -54,3 +54,6 @@ class TelegramUser(AbstractUser):
     class Meta:
         verbose_name = "Пользователь телеграма"
         verbose_name_plural = "Пользователи телеграма"
+
+    def __str__(self):
+        return "{} {}".format(self.first_name, self.last_name)
