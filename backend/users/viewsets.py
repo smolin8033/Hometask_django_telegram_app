@@ -13,12 +13,17 @@ class TelegramUserViewSet(ModelViewSet):
     serializer_class = TelegramUserSerializer
 
     def get_queryset(self):
+        user_group = self.request.user.groups.first().name
+
+        mapper = {"Teachers": "Students", "Students": "Teachers"}
+
+        group_name = mapper.get(user_group)
 
         queryset = (
             TelegramUser.objects.prefetch_related("telegram_users")
             .prefetch_related("groups")
             .prefetch_related("user_permissions")
-            .filter(id__in=self.request.user.telegram_users.all(), groups__name="Teachers")
+            .filter(id__in=self.request.user.telegram_users.all(), groups__name=group_name)
             .order_by("last_name", "first_name")
         )
         return queryset
