@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+from config.loggers import logger
 from groups.user_groups import students_group, teachers_group
 from users.models import TelegramUser
 from users.serializers import TelegramUserSerializer
@@ -42,6 +43,7 @@ class TelegramUserViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         instance: TelegramUser = serializer.save()
+        logger.info(instance)
         return instance
 
     @staticmethod
