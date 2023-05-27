@@ -9,6 +9,7 @@ django-debug-toolbar==3.6.0
 django-stubs==4.2.0
 django-stubs-ext==4.2.0
 djangorestframework==3.13.1
+djangorestframework-stubs==3.14.0
 drf-spectacular==0.22.1
 factory-boy==3.2.1
 Faker==15.1.3
