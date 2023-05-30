@@ -4,7 +4,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile, SimpleUploadedF
 from PIL import Image
 
 
-def generate_temp_image(counter=1):
+def generate_temp_image(counter: int = 1) -> list | SimpleUploadedFile:
     images = []
     for _ in list(range(counter)):
         file = BytesIO()
@@ -15,7 +15,7 @@ def generate_temp_image(counter=1):
     return images[0] if counter == 1 else images
 
 
-def generate_temp_file(counter=1):
+def generate_temp_file(counter: int = 1) -> list | InMemoryUploadedFile:
     files = []
     for _ in list(range(counter)):
         file = StringIO()

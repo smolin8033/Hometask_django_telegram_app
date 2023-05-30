@@ -1,6 +1,10 @@
+from typing import Type
+
 from django.db import transaction
+from django.db.models import QuerySet
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -20,18 +24,18 @@ class HometaskViewSet(ModelViewSet):
     Домашние задания
     """
 
-    def get_serializer_class(self):
+    def get_serializer_class(self) -> Type[HometaskCreateSerializer | HometaskListSerializer]:
         serializer_class = HometaskListSerializer
         if self.action == self.create.__name__:
             serializer_class = HometaskCreateSerializer
         return serializer_class
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         queryset = Hometask.objects.prefetch_related("images").prefetch_related("files").all()
         return queryset
 
     @transaction.atomic
-    def create(self, request, *args, **kwargs):
+    def create(self, request: Request, *args, **kwargs) -> Response:
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
