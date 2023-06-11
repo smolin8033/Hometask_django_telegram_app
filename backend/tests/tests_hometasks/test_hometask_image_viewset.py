@@ -1,6 +1,7 @@
 import pytest
 from django.urls import reverse
 from rest_framework import status
+from rest_framework.test import APIClient
 
 from hometask.models import HometaskImage
 from tests.tests_hometasks.faked_data.factories import HometaskFactory
@@ -10,7 +11,7 @@ pytestmark = pytest.mark.django_db
 
 
 class TestHometaskImageViewSet:
-    def test_action_update(self, api_client):
+    def test_action_update(self, api_client: APIClient) -> None:
         hometask = HometaskFactory()
         image = hometask.images.first()
         temp_image = generate_temp_image()

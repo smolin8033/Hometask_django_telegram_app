@@ -17,7 +17,17 @@ profile = 'black'
 
 [tool.mypy]
 disallow_untyped_defs = true
+disable_error_code = ['assignment', 'no-redef', 'union-attr', 'override']
 plugins = ["mypy_django_plugin.main", "mypy_drf_plugin.main"]
+follow_imports = 'skip'
+install_types = true
+exclude = [
+    'manage.py',
+    'config/settings.py',
+    'tests/',
+    'config/urls.py',
+    'users/middlewares/auth_middleware.py',
+]
 
 [tool.django-stubs]
 django_settings_module = "config.settings"

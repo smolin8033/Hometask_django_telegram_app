@@ -1,6 +1,7 @@
 import pytest
 from django.urls import reverse
 from rest_framework import status
+from rest_framework.test import APIClient
 
 from hometask.models import Hometask, HometaskFile, HometaskImage
 from tests.tests_hometasks.faked_data.factories import HometaskFactory
@@ -13,7 +14,7 @@ pytestmark = pytest.mark.django_db
 
 
 class TestHometaskViewSet:
-    def test_action_create_no_files(self, api_client):
+    def test_action_create_no_files(self, api_client: APIClient) -> None:
         data = {
             "name": "test_name",
             "start_datetime": "2022-10-30 01:55:39",
@@ -41,7 +42,7 @@ class TestHometaskViewSet:
         assert data["url"] == hometask.url
         assert data["more_info"] == hometask.more_info
 
-    def test_action_create_one_image_one_file(self, api_client):
+    def test_action_create_one_image_one_file(self, api_client: APIClient) -> None:
         images = generate_temp_image(counter=1)
         files = generate_temp_file(counter=1)
 
@@ -79,7 +80,7 @@ class TestHometaskViewSet:
         assert data["url"] == hometask.url
         assert data["more_info"] == hometask.more_info
 
-    def test_action_create_multiple_files(self, api_client):
+    def test_action_create_multiple_files(self, api_client: APIClient) -> None:
         images = generate_temp_image(counter=2)
         files = generate_temp_file(counter=2)
 
@@ -117,7 +118,7 @@ class TestHometaskViewSet:
         assert data["url"] == hometask.url
         assert data["more_info"] == hometask.more_info
 
-    def test_action_list(self, api_client, django_assert_max_num_queries):
+    def test_action_list(self, api_client: APIClient, django_assert_max_num_queries: str) -> None:
 
         hometasks_array = [HometaskFactory() for _ in range(3)]
         assert len(hometasks_array) == 3
@@ -133,7 +134,7 @@ class TestHometaskViewSet:
         assert len(json_response[0]["images"]) == 1
         assert len(json_response[2]["files"]) == 1
 
-    def test_action_retrieve(self, api_client, django_assert_max_num_queries):
+    def test_action_retrieve(self, api_client: APIClient, django_assert_max_num_queries) -> None:
 
         hometask = HometaskFactory()
 
@@ -144,7 +145,7 @@ class TestHometaskViewSet:
 
         assert response.status_code == status.HTTP_200_OK
 
-    def test_action_delete(self, api_client):
+    def test_action_delete(self, api_client: APIClient) -> None:
         hometask = HometaskFactory()
 
         assert Hometask.objects.count() == 1
@@ -161,7 +162,7 @@ class TestHometaskViewSet:
         assert HometaskImage.objects.count() == 0
         assert HometaskFile.objects.count() == 0
 
-    def test_action_update(self, api_client):
+    def test_action_update(self, api_client: APIClient) -> None:
         hometask = HometaskFactory()
 
         assert Hometask.objects.count() == 1

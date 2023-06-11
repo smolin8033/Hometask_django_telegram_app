@@ -35,7 +35,7 @@ class HometaskViewSet(ModelViewSet):
         return queryset
 
     @transaction.atomic
-    def create(self, request: Request, *args, **kwargs) -> Response:
+    def create(self, request: Request, *args: tuple, **kwargs: dict) -> Response:
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 

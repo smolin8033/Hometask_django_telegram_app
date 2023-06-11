@@ -7,5 +7,5 @@ class UsersConfig(AppConfig):
     name = "users"
     verbose_name = "Пользователи"
 
-    def ready(self):
+    def ready(self) -> None:
         import users.signals.telegram_user

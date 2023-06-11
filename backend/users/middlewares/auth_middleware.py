@@ -1,13 +1,18 @@
+from typing import Callable
+
+from rest_framework.request import Request
+from rest_framework.response import Response
+
 from config.hashers import myctx
 from users.models import TelegramUser
 
 
 class CheckAuthorization:
-    def __init__(self, get_response):
+    def __init__(self, get_response: Callable) -> None:
         """One-time configuration and initialization."""
         self.get_response = get_response
 
-    def __call__(self, request):
+    def __call__(self, request: Request) -> Response:
         """
         Code to be executed for each request before
         the view (and later middleware) are called.

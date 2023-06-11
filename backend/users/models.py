@@ -55,5 +55,5 @@ class TelegramUser(AbstractUser):
         verbose_name = "Пользователь телеграма"
         verbose_name_plural = "Пользователи телеграма"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "{} {}".format(self.first_name, self.last_name)

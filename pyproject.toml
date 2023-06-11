@@ -18,6 +18,7 @@ profile = 'black'
 [tool.mypy]
 disallow_untyped_defs = true
 plugins = ["mypy_django_plugin.main", "mypy_drf_plugin.main"]
+# ['^backend/config/settings\.py$',] # ['backend/config/settings.py']
 
 [tool.django-stubs]
 django_settings_module = "backend.config.settings"

@@ -1,6 +1,7 @@
 import pytest
 from django.urls import reverse
 from rest_framework import status
+from rest_framework.test import APIClient
 
 from hometask.models import HometaskFile
 from tests.tests_hometasks.faked_data.factories import HometaskFactory
@@ -10,7 +11,7 @@ pytestmark = pytest.mark.django_db
 
 
 class TestHometaskFileViewSet:
-    def test_action_update(self, api_client):
+    def test_action_update(self, api_client: APIClient) -> None:
         hometask = HometaskFactory()
         file = hometask.files.first()
         temp_file = generate_temp_file()

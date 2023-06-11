@@ -1,5 +1,7 @@
+from django.db.models import QuerySet
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -12,7 +14,7 @@ from users.serializers import TelegramUserSerializer
 class TelegramUserViewSet(ModelViewSet):
     serializer_class = TelegramUserSerializer
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         user_group: str = self.request.user.groups.first().name
 
         mapper = {"Teachers": "Students", "Students": "Teachers"}
@@ -28,8 +30,8 @@ class TelegramUserViewSet(ModelViewSet):
         )
         return queryset
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+    def create(self, request: Request, *args: tuple, **kwargs: dict) -> Response:
+        serializer: TelegramUserSerializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         instance = self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
@@ -40,12 +42,12 @@ class TelegramUserViewSet(ModelViewSet):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-    def perform_create(self, serializer):
+    def perform_create(self, serializer: TelegramUserSerializer) -> TelegramUser:
         instance: TelegramUser = serializer.save()
         return instance
 
     @staticmethod
-    def add_to_group(headers, instance: TelegramUser):
+    def add_to_group(headers: dict, instance: TelegramUser) -> TelegramUser:
         if headers["Role"] == "teacher":
             instance.groups.add(teachers_group)
         elif headers["Role"] == "student":
@@ -54,7 +56,7 @@ class TelegramUserViewSet(ModelViewSet):
         return instance
 
     @staticmethod
-    def make_active(instance: TelegramUser):
+    def make_active(instance: TelegramUser) -> TelegramUser:
         instance.is_active = True
         instance.save()
         return instance
