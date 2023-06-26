@@ -27,6 +27,7 @@ exclude = [
     'tests/',
     'config/urls.py',
     'users/middlewares/auth_middleware.py',
+    'hometask/services/bulk_create_objects.py',
 ]
 
 [tool.django-stubs]

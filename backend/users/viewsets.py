@@ -1,11 +1,12 @@
+from django.contrib.auth.models import Group
 from django.db.models import QuerySet
+from django.shortcuts import get_object_or_404
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from groups.user_groups import students_group, teachers_group
 from users.models import TelegramUser
 from users.serializers import TelegramUserSerializer
 
@@ -49,9 +50,11 @@ class TelegramUserViewSet(ModelViewSet):
     @staticmethod
     def add_to_group(headers: dict, instance: TelegramUser) -> TelegramUser:
         if headers["Role"] == "teacher":
-            instance.groups.add(teachers_group)
+            group = get_object_or_404(Group, name="Teachers")
+            instance.groups.add(group)
         elif headers["Role"] == "student":
-            instance.groups.add(students_group)
+            group = get_object_or_404(Group, name="Students")
+            instance.groups.add(group)
         instance.save()
         return instance
 

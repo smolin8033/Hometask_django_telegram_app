@@ -1,19 +1,6 @@
 import os
 from pathlib import Path
 
-#  TODO CRUD User
-#  TODO aiogram
-#  TODO dumpdata
-
-# ? https://stackoverflow.com/questions/27015931/remove-null-fields-from-django-rest-framework-response
-# ? admin page model names
-#     сертификаты?
-# pre_save: max recursion depth
-# ? getattr(session, name) and HttpClient in general
-# ? Class 'TypedDict' does not define '__getitem__', so the '[]' operator cannot be used on its instances
-# ? 400 <coroutine object ClientResponse.json at 0x000002D6B9E32C00>
-# ? корректная обработка get, не проходят данные
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("SECRET_KEY")

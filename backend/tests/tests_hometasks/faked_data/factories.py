@@ -1,4 +1,5 @@
 import factory
+from django.contrib.auth.models import Group
 from factory import RelatedFactory
 from factory.django import DjangoModelFactory
 from faker import Faker
@@ -53,3 +54,12 @@ class HometaskFactory(DjangoModelFactory):
 
     class Meta:
         model = Hometask
+
+
+class GroupFactory(DjangoModelFactory):
+    """Фабрика для модели группы пользователей"""
+
+    name = None
+
+    class Meta:
+        model = Group
