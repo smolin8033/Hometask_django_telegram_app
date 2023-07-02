@@ -6,7 +6,7 @@ from hometask.models import HometaskFile, HometaskImage
 from hometask.services.bulk_create_objects import bulk_create_nested_objects
 
 
-def get_nested_objects(
+def handle_nested_objects(
     request: Request, hometask_id: int, **nested_objects: Type[HometaskImage] | Type[HometaskFile]
 ) -> None:
     for field_name, model in nested_objects.items():
